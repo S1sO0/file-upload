@@ -14,6 +14,13 @@ import java.util.UUID;
 *  non-content fields as the existing object and sets the content to the new
 *  content array.
 * */
+
+/**
+ * Perhaps UUID can be replaced long IDs. UUIDs are 128 bit values,
+ * whereas long IDs are 64 bit, are generally faster to generate and
+ * index compared to UUIDs.
+ *
+ */
 public class Attachment {
     private UUID id;
     private String name;

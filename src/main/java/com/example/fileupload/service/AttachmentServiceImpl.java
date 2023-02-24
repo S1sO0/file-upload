@@ -20,6 +20,11 @@ public class AttachmentServiceImpl implements AttachmentService {
         this.attachmentDao = Assert.assertNotNull(attachmentDao, "Dao cannot be null");
     }
 
+    /*
+     * @Transactional - Spring creates a transaction around this method, if an exception is thrown, the
+     * transaction will be rolled back, could also be at a Class level making every public method
+     * transactional.
+     */
     @Override
     @Transactional
     public Attachment save(Attachment attachment) {
