@@ -20,12 +20,30 @@ import java.util.UUID;
 @RequestMapping("/attachment")
 public class AttachmentController {
     private final AttachmentService attachmentService;
+    /**
+     * While logging is important for debugging and troubleshooting,
+     * excessive logging can have a negative impact on performance.
+     */
     private final Logger LOG = LoggerFactory.getLogger(AttachmentController.class);
 
     public AttachmentController(AttachmentService attachmentService) {
         this.attachmentService = Assert.assertNotNull(attachmentService, "Attachment service cannot be null");
     }
 
+    /**
+     * DTO can be used for the save method,instead of accepting Attachment
+     * you can use a DTO that only includes the necessary fields for creating
+     * a new attachment, not creating but saving. Again, this can reduce the
+     * amount of data being transferred over the network and can improve
+     * performance.
+     *
+     * Instead of using ServletUriComponentsBuilder to generate the location
+     * headers, you can concatenate the attachment ID to the base URL.
+     *
+     * IllegalArgumentException is very generic, can use
+     * MethodArgumentNotValidException to indicate there was an error with
+     * the request body.
+     */
     @CrossOrigin(exposedHeaders = "Location")
     @PostMapping("/")
     public ResponseEntity<Attachment> save(@RequestBody Attachment attachment, BindingResult errors) {
@@ -38,6 +56,11 @@ public class AttachmentController {
                 .buildAndExpand(incomingAttachment.getId()).toUri()).body(incomingAttachment);
     }
 
+    /**
+     * Instead of always returning ResponseEntity.notFound() when the
+     * attachment content is empty, can be replaced with .noContent()
+     * to indicate the request was successful but there was no content.
+     */
     @GetMapping("/content/{id}")
     public ResponseEntity<byte[]> getContent(@PathVariable UUID id) {
         byte[] attachmentContent = attachmentService.getContent(id);
@@ -51,6 +74,17 @@ public class AttachmentController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Generic ResponseEntity<?> should be replaced with more specific
+     * response types, such as <AttachmentMetadata>, while this has no
+     * performance effect, it increases the readability and makes it
+     * easier to understand.
+     *
+     * Moreover, getMetadata and getContent methods can be combined into
+     * one, that would return a DTO that contains both the metadata
+     * and content. This reduces the number of network requests
+     * and improves performance.
+     */
     @GetMapping("/metadata/{attachmentId}")
     public ResponseEntity<?> getMetadata(@PathVariable UUID attachmentId) {
         LOG.debug("controller requesting metadata of attachment with ID {}", attachmentId);

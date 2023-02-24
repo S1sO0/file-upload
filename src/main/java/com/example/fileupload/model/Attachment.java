@@ -2,6 +2,18 @@ package com.example.fileupload.model;
 
 import java.util.UUID;
 
+/*
+*  The Attachment class represents a way to represent & manipulate attachments,
+*  two constructors, one that takes all fields as arguments, another one that
+*  takes only the non-content fields. If  a content array is passed to the
+*  constructor, it checks if its length matches the specified size and throws an
+*  IllegalArgumentException if not.
+*
+*  This class also provides a "from" method that takes an existing Attachment
+*  object and new content array, creates a new Attachment object with the same
+*  non-content fields as the existing object and sets the content to the new
+*  content array.
+* */
 public class Attachment {
     private UUID id;
     private String name;

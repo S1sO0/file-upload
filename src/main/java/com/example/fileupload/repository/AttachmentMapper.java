@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/*
+*  MyBatis mapper interface that defines methods for
+*  interacting with attachments table in a database.
+* */
 @Mapper
 public interface AttachmentMapper {
 

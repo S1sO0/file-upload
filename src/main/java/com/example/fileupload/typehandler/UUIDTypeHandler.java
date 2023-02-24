@@ -11,6 +11,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
+/*
+* In Java, type handlers are classes/interfaces that define how a particular
+* data type should be converted or mapped between different formats or
+* representations. They are usually used where data needs to be stored in a
+* database.
+*
+* TypeHandlers typically consist of two main parts, a Java class that
+* represents the data type being converted, and a set of methods that
+* handle the conversion to and from the target format.
+*
+* TypeHandlers are often used with object relational mapping (ORM) frameworks
+* such as Hibernate or MyBatis, which provide a convenient way to map Java
+* objects to database tables. These frameworks use type handlers to handle the
+* conversion of Java objects to database types and vice versa.
+* */
 @MappedJdbcTypes(JdbcType.OTHER)
 @MappedTypes(UUID.class)
 public class UUIDTypeHandler extends BaseTypeHandler<UUID> {
